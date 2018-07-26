@@ -68,15 +68,41 @@ namespace CHB_ConfigCopy
                     {
                         File.Copy(WebConfig, WebConfigDestino, true);
 
+                        XmlDocument xmlDoc = new XmlDocument();
+                        xmlDoc.Load(WebConfigDestino);
+
                         if (chkSessionState.Checked)
                         {
-                            XmlDocument xmlDoc = new XmlDocument();
-                            xmlDoc.Load(WebConfigDestino);
                             xmlDoc.GetElementsByTagName("sessionState")[0].Attributes["stateConnectionString"].Value = txtSessionState.Text;
-                            xmlDoc.Save(WebConfigDestino);
                         }
 
-                        if (chkRemoverShadowCopy.Checked)
+                        XmlNode compilation = xmlDoc.GetElementsByTagName("system.web")[0]["compilation"];
+                        XmlNode urlCompression = xmlDoc.GetElementsByTagName("system.web")[0]["urlCompression"];
+
+                        if (chkDesabilitarCache.Checked)
+                        {
+                            compilation.Attributes["optimizeCompilations"].Value = "false";
+                            urlCompression.Attributes["doStaticCompression"].Value = "false";
+
+                            XmlNode hostingEnvironment = xmlDoc.CreateElement("hostingEnvironment");
+                            hostingEnvironment.Attributes["shadowCopyBinAssemblies"].Value = "false";
+                        }
+                        else
+                        {
+                            XmlNode hostingEnvironment = xmlDoc.GetElementsByTagName("system.web")[0]["hostingEnvironment"];
+
+                            if (hostingEnvironment != null)
+                            {
+                                xmlDoc.GetElementsByTagName("system.web")[0].RemoveChild(hostingEnvironment);
+                            }
+
+                            compilation.Attributes["optimizeCompilations"].Value = "true";
+                            urlCompression.Attributes["doStaticCompression"].Value = "true";
+                        }
+
+                        xmlDoc.Save(WebConfigDestino);
+
+                        /*if (chkRemoverShadowCopy.Checked)
                         {
                             XmlDocument xmlDoc = new XmlDocument();
                             xmlDoc.Load(WebConfigDestino);
@@ -88,7 +114,7 @@ namespace CHB_ConfigCopy
                                 xmlDoc.GetElementsByTagName("system.web")[0].RemoveChild(hostingEnvironment);
                                 xmlDoc.Save(WebConfigDestino);                            
                             }
-                        }
+                        }*/
 
                         msgErro += "O web.config foi copiado com sucesso!\n";
                     }
@@ -247,16 +273,16 @@ namespace CHB_ConfigCopy
 
                 try
                 {
-                    chkRemoverShadowCopy.Checked = bool.Parse(xmlDoc.DocumentElement.GetElementsByTagName("RemoverShadowCopy").Item(0).InnerText);
+                    chkDesabilitarCache.Checked = bool.Parse(xmlDoc.DocumentElement.GetElementsByTagName("DesabilitarCache").Item(0).InnerText);
                 }
                 catch (Exception)
                 {
-                    chkRemoverShadowCopy.Checked = true;
+                    chkDesabilitarCache.Checked = false;
                 }
             }
             else
             {
-                SalvarConfig(ref xmlDoc, CAMINHO_RAIZ, CAMINHO_ORACLE, CAMINHO_POST, CAMINHO_SQL, SESSION_STATE, true, true, false, false, true);
+                SalvarConfig(ref xmlDoc, CAMINHO_RAIZ, CAMINHO_ORACLE, CAMINHO_POST, CAMINHO_SQL, SESSION_STATE, true, true, false, false, false);
 
                 txtCaminhoRaiz.Text = CAMINHO_RAIZ;
                 txtOracle.Text = CAMINHO_ORACLE;
@@ -266,7 +292,7 @@ namespace CHB_ConfigCopy
                 chkClientExe.Checked = chkWeb.Checked = true;
                 chkFechar.Checked = false;
                 chkSessionState.Checked = false;
-                chkRemoverShadowCopy.Checked = true;
+                chkDesabilitarCache.Checked = false;
             }
 
             BuscarEnvironments();
@@ -297,10 +323,10 @@ namespace CHB_ConfigCopy
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             XmlDocument xmlDoc = new XmlDocument();
-            SalvarConfig(ref xmlDoc, txtCaminhoRaiz.Text, txtOracle.Text, txtPost.Text, txtSQL.Text, txtSessionState.Text, chkWeb.Checked, chkClientExe.Checked, chkFechar.Checked, chkSessionState.Checked, chkRemoverShadowCopy.Checked);
+            SalvarConfig(ref xmlDoc, txtCaminhoRaiz.Text, txtOracle.Text, txtPost.Text, txtSQL.Text, txtSessionState.Text, chkWeb.Checked, chkClientExe.Checked, chkFechar.Checked, chkSessionState.Checked, chkDesabilitarCache.Checked);
         }
 
-        private void SalvarConfig(ref XmlDocument xmlDoc, string CaminhoRaiz, string Oracle, string Post, string SQL, string SessionState, bool CopiarWebConfig, bool CopiarClientExeConfig, bool FecharCHBConfigCopy, bool ModificarSessionState, bool RemoverShadowCopy)
+        private void SalvarConfig(ref XmlDocument xmlDoc, string CaminhoRaiz, string Oracle, string Post, string SQL, string SessionState, bool CopiarWebConfig, bool CopiarClientExeConfig, bool FecharCHBConfigCopy, bool ModificarSessionState, bool DesabilitarCache)
         {
             XmlElement xmlRoot = xmlDoc.CreateElement("Settings");
             xmlDoc.AppendChild(xmlRoot);
@@ -341,9 +367,9 @@ namespace CHB_ConfigCopy
             xmlModificarSessionState.InnerText = ModificarSessionState.ToString();
             xmlDoc.DocumentElement.AppendChild(xmlModificarSessionState);
 
-            XmlElement xmlRemoverShadowCopy = xmlDoc.CreateElement("RemoverShadowCopy");
-            xmlRemoverShadowCopy.InnerText = RemoverShadowCopy.ToString();
-            xmlDoc.DocumentElement.AppendChild(xmlRemoverShadowCopy);
+            XmlElement xmlDesabilitarCache = xmlDoc.CreateElement("DesabilitarCache");
+            xmlDesabilitarCache.InnerText = DesabilitarCache.ToString();
+            xmlDoc.DocumentElement.AppendChild(xmlDesabilitarCache);
 
             xmlDoc.Save(CaminhoConfig);          
         }

@@ -58,7 +58,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.Tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.FolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.chkRemoverShadowCopy = new System.Windows.Forms.CheckBox();
+            this.chkDesabilitarCache = new System.Windows.Forms.CheckBox();
             this.tabCHBConfigCopy.SuspendLayout();
             this.tabPrincipal.SuspendLayout();
             this.tabConfiguracoes.SuspendLayout();
@@ -87,7 +87,7 @@
             this.tabPrincipal.Location = new System.Drawing.Point(4, 22);
             this.tabPrincipal.Name = "tabPrincipal";
             this.tabPrincipal.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrincipal.Size = new System.Drawing.Size(514, 394);
+            this.tabPrincipal.Size = new System.Drawing.Size(514, 419);
             this.tabPrincipal.TabIndex = 0;
             this.tabPrincipal.Text = "Principal";
             this.tabPrincipal.UseVisualStyleBackColor = true;
@@ -146,7 +146,7 @@
             // 
             // tabConfiguracoes
             // 
-            this.tabConfiguracoes.Controls.Add(this.chkRemoverShadowCopy);
+            this.tabConfiguracoes.Controls.Add(this.chkDesabilitarCache);
             this.tabConfiguracoes.Controls.Add(this.chkSessionState);
             this.tabConfiguracoes.Controls.Add(this.txtSessionState);
             this.tabConfiguracoes.Controls.Add(this.label8);
@@ -247,7 +247,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSQL.Location = new System.Drawing.Point(9, 194);
             this.txtSQL.Name = "txtSQL";
-            this.txtSQL.ReadOnly = true;
             this.txtSQL.Size = new System.Drawing.Size(461, 20);
             this.txtSQL.TabIndex = 11;
             // 
@@ -266,7 +265,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPost.Location = new System.Drawing.Point(9, 138);
             this.txtPost.Name = "txtPost";
-            this.txtPost.ReadOnly = true;
             this.txtPost.Size = new System.Drawing.Size(461, 20);
             this.txtPost.TabIndex = 9;
             // 
@@ -285,7 +283,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOracle.Location = new System.Drawing.Point(9, 84);
             this.txtOracle.Name = "txtOracle";
-            this.txtOracle.ReadOnly = true;
             this.txtOracle.Size = new System.Drawing.Size(461, 20);
             this.txtOracle.TabIndex = 7;
             // 
@@ -356,7 +353,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCaminhoRaiz.Location = new System.Drawing.Point(9, 28);
             this.txtCaminhoRaiz.Name = "txtCaminhoRaiz";
-            this.txtCaminhoRaiz.ReadOnly = true;
             this.txtCaminhoRaiz.Size = new System.Drawing.Size(461, 20);
             this.txtCaminhoRaiz.TabIndex = 1;
             // 
@@ -369,15 +365,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Caminho raiz dos arquivos:";
             // 
-            // chkRemoverShadowCopy
+            // chkDesabilitarCache
             // 
-            this.chkRemoverShadowCopy.AutoSize = true;
-            this.chkRemoverShadowCopy.Location = new System.Drawing.Point(9, 377);
-            this.chkRemoverShadowCopy.Name = "chkRemoverShadowCopy";
-            this.chkRemoverShadowCopy.Size = new System.Drawing.Size(230, 17);
-            this.chkRemoverShadowCopy.TabIndex = 1;
-            this.chkRemoverShadowCopy.Text = "Remover tag que desabilita o shadow copy";
-            this.chkRemoverShadowCopy.UseVisualStyleBackColor = true;
+            this.chkDesabilitarCache.AutoSize = true;
+            this.chkDesabilitarCache.Location = new System.Drawing.Point(9, 377);
+            this.chkDesabilitarCache.Name = "chkDesabilitarCache";
+            this.chkDesabilitarCache.Size = new System.Drawing.Size(216, 17);
+            this.chkDesabilitarCache.TabIndex = 19;
+            this.chkDesabilitarCache.Text = "Desabilitar cache da aplicação na cópia";
+            this.chkDesabilitarCache.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -429,7 +425,7 @@
         private System.Windows.Forms.TextBox txtSessionState;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox chkSessionState;
-        private System.Windows.Forms.CheckBox chkRemoverShadowCopy;
+        private System.Windows.Forms.CheckBox chkDesabilitarCache;
     }
 }
 
