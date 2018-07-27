@@ -13,7 +13,7 @@ namespace CHB_ConfigCopy
 {
     public partial class frmMain : Form
     {
-        private const string CAMINHO_RAIZ = @"\\serverchbweb\sites\";
+        private const string CAMINHO_RAIZ = @"\\serverchbweb15\sites\";
         private const string CAMINHO_ORACLE = @"C:\inetpub\wwwroot\chbwebora\";
         private const string CAMINHO_POST = @"C:\inetpub\wwwroot\chbwebpos\";
         private const string CAMINHO_SQL = @"C:\inetpub\wwwroot\chbwebsql\";
@@ -31,8 +31,7 @@ namespace CHB_ConfigCopy
         {
             string msgErro = "";
             string WebConfig = CaminhoRaiz + Environment + @"\" + Base + @"\web.config";
-            string ClientExeConfig = CaminhoRaiz + Environment + @"\" + Base + @"\client.exe.config"; //Alterado a pedido do Tiago do TI, pois ele manipula os arquivos na raiz das pastas na rede e não dentro da pasta "bin"
-            //string ClientExeConfig = CaminhoRaiz + Environment + @"\" + Base + @"\bin\client.exe.config";
+            string ClientExeConfig = CaminhoRaiz + Environment + @"\" + Base + @"\client.exe.config";
 
             bool Executar = false;
             string WebConfigDestino = "";
@@ -77,7 +76,7 @@ namespace CHB_ConfigCopy
                         }
 
                         XmlNode compilation = xmlDoc.GetElementsByTagName("system.web")[0]["compilation"];
-                        XmlNode urlCompression = xmlDoc.GetElementsByTagName("system.web")[0]["urlCompression"];
+                        XmlNode urlCompression = xmlDoc.GetElementsByTagName("system.webServer")[0]["urlCompression"];
 
                         if (chkDesabilitarCache.Checked)
                         {
@@ -96,25 +95,18 @@ namespace CHB_ConfigCopy
                                 xmlDoc.GetElementsByTagName("system.web")[0].RemoveChild(hostingEnvironment);
                             }
 
-                            compilation.Attributes["optimizeCompilations"].Value = "true";
-                            urlCompression.Attributes["doStaticCompression"].Value = "true";
+                            if (compilation != null)
+                            {
+                                compilation.Attributes["optimizeCompilations"].Value = "true";
+                            }
+
+                            if (urlCompression != null)
+                            {
+                                urlCompression.Attributes["doStaticCompression"].Value = "true";
+                            }
                         }
 
                         xmlDoc.Save(WebConfigDestino);
-
-                        /*if (chkRemoverShadowCopy.Checked)
-                        {
-                            XmlDocument xmlDoc = new XmlDocument();
-                            xmlDoc.Load(WebConfigDestino);
-
-                            XmlNode hostingEnvironment = xmlDoc.GetElementsByTagName("system.web")[0]["hostingEnvironment"];
-
-                            if (hostingEnvironment != null)
-                            {
-                                xmlDoc.GetElementsByTagName("system.web")[0].RemoveChild(hostingEnvironment);
-                                xmlDoc.Save(WebConfigDestino);                            
-                            }
-                        }*/
 
                         msgErro += "O web.config foi copiado com sucesso!\n";
                     }
@@ -229,11 +221,50 @@ namespace CHB_ConfigCopy
             {
                 xmlDoc.Load(CaminhoConfig);
 
-                txtCaminhoRaiz.Text = xmlDoc.DocumentElement.GetElementsByTagName("CaminhoRaiz").Item(0).InnerText;
-                txtOracle.Text = xmlDoc.DocumentElement.GetElementsByTagName("Oracle").Item(0).InnerText;
-                txtPost.Text = xmlDoc.DocumentElement.GetElementsByTagName("Post").Item(0).InnerText;
-                txtSQL.Text = xmlDoc.DocumentElement.GetElementsByTagName("SQL").Item(0).InnerText;
-                txtSessionState.Text = xmlDoc.DocumentElement.GetElementsByTagName("SessionState").Item(0).InnerText;
+                try
+                {
+                    txtCaminhoRaiz.Text = xmlDoc.DocumentElement.GetElementsByTagName("CaminhoRaiz").Item(0).InnerText;
+                }
+                catch (Exception)
+                {
+                    txtCaminhoRaiz.Text = CAMINHO_RAIZ;
+                }
+
+                try
+                {
+                    txtOracle.Text = xmlDoc.DocumentElement.GetElementsByTagName("Oracle").Item(0).InnerText;
+                }
+                catch (Exception)
+                {
+                    txtOracle.Text = CAMINHO_ORACLE;
+                }
+
+                try
+                {
+                    txtPost.Text = xmlDoc.DocumentElement.GetElementsByTagName("Post").Item(0).InnerText;
+                }
+                catch (Exception)
+                {
+                    txtPost.Text = CAMINHO_POST;
+                }
+
+                try
+                {
+                    txtSQL.Text = xmlDoc.DocumentElement.GetElementsByTagName("SQL").Item(0).InnerText;
+                }
+                catch (Exception)
+                {
+                    txtSQL.Text = CAMINHO_SQL;
+                }
+
+                try
+                {
+                    txtSessionState.Text = xmlDoc.DocumentElement.GetElementsByTagName("SessionState").Item(0).InnerText;
+                }
+                catch (Exception)
+                {
+                    txtSessionState.Text = SESSION_STATE;
+                }
 
                 try
                 {
