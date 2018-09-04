@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
+using CHB_ConfigCopy.Classes;
 
 namespace CHB_ConfigCopy
 {
@@ -18,13 +19,19 @@ namespace CHB_ConfigCopy
         private const string CAMINHO_POST = @"C:\inetpub\wwwroot\chbwebpos\";
         private const string CAMINHO_SQL = @"C:\inetpub\wwwroot\chbwebsql\";
         private const string SESSION_STATE = @"tcpip=serverchb02:42424";
-        private string CaminhoConfig = Application.StartupPath + @"\Settings.xml";
 
         public frmMain()
         {
             InitializeComponent();
-
-            ConfigDefault();
+            if (File.Exists(Defaults.CaminhoConfig()))
+            {
+                ProcessadorXml processador = new ProcessadorXml();
+                processador.PrepararConfiguracoes();
+            }
+            else
+            {
+                //ConfigDefault();
+            }
         }
 
         private void ExecutarCopia(string CaminhoRaiz, string Environment, string Base, string Oracle, string Post, string SQL)
@@ -73,37 +80,6 @@ namespace CHB_ConfigCopy
                         if (chkSessionState.Checked)
                         {
                             xmlDoc.GetElementsByTagName("sessionState")[0].Attributes["stateConnectionString"].Value = txtSessionState.Text;
-                        }
-
-                        XmlNode compilation = xmlDoc.GetElementsByTagName("system.web")[0]["compilation"];
-                        XmlNode urlCompression = xmlDoc.GetElementsByTagName("system.webServer")[0]["urlCompression"];
-
-                        if (chkDesabilitarCache.Checked)
-                        {
-                            compilation.Attributes["optimizeCompilations"].Value = "false";
-                            urlCompression.Attributes["doStaticCompression"].Value = "false";
-
-                            XmlNode hostingEnvironment = xmlDoc.CreateElement("hostingEnvironment");
-                            hostingEnvironment.Attributes["shadowCopyBinAssemblies"].Value = "false";
-                        }
-                        else
-                        {
-                            XmlNode hostingEnvironment = xmlDoc.GetElementsByTagName("system.web")[0]["hostingEnvironment"];
-
-                            if (hostingEnvironment != null)
-                            {
-                                xmlDoc.GetElementsByTagName("system.web")[0].RemoveChild(hostingEnvironment);
-                            }
-
-                            if (compilation != null)
-                            {
-                                compilation.Attributes["optimizeCompilations"].Value = "true";
-                            }
-
-                            if (urlCompression != null)
-                            {
-                                urlCompression.Attributes["doStaticCompression"].Value = "true";
-                            }
                         }
 
                         xmlDoc.Save(WebConfigDestino);
@@ -217,9 +193,9 @@ namespace CHB_ConfigCopy
         {
             XmlDocument xmlDoc = new XmlDocument();
 
-            if (File.Exists(CaminhoConfig))
+            if (File.Exists(Defaults.CaminhoConfig()))
             {
-                xmlDoc.Load(CaminhoConfig);
+                xmlDoc.Load(Defaults.CaminhoConfig());
 
                 try
                 {
@@ -402,23 +378,19 @@ namespace CHB_ConfigCopy
             xmlDesabilitarCache.InnerText = DesabilitarCache.ToString();
             xmlDoc.DocumentElement.AppendChild(xmlDesabilitarCache);
 
-            xmlDoc.Save(CaminhoConfig);          
+            xmlDoc.Save(Defaults.CaminhoConfig());          
         }
 
         private void btnCriarPerfil_Click(object sender, EventArgs e)
         {
-            string nomePerfil = Microsoft.VisualBasic.Interaction.InputBox("Digite o nome do novo perfil", "Novo perfil");
-            bool validacaoOK = true;
+            string nomePerfil = "";
+            frmInputBox f = new frmInputBox();
+            f.ShowDialog();
 
-            if (nomePerfil.Trim() == "")
+            ProcessadorXml processador = new ProcessadorXml();
+            if (processador.AdicionarPerfil(frmInputBox.NomePerfil))
             {
-                MessageBox.Show("Informe um nome de perfil válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                validacaoOK = false;
-            }
-
-            if (validacaoOK)
-            {
-                //Incluir opções para novas configurações de perfil
+                //Recarregar configurações
             }
         }
     }
