@@ -37,6 +37,7 @@
             this.cmbEnvironment = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tabConfiguracoes = new System.Windows.Forms.TabPage();
+            this.chkDesabilitarCache = new System.Windows.Forms.CheckBox();
             this.chkSessionState = new System.Windows.Forms.CheckBox();
             this.txtSessionState = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -57,8 +58,10 @@
             this.txtCaminhoRaiz = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.Tooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.btnCriarPerfil = new System.Windows.Forms.Button();
             this.FolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.chkDesabilitarCache = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabCHBConfigCopy.SuspendLayout();
             this.tabPrincipal.SuspendLayout();
             this.tabConfiguracoes.SuspendLayout();
@@ -74,7 +77,7 @@
             this.tabCHBConfigCopy.Location = new System.Drawing.Point(12, 12);
             this.tabCHBConfigCopy.Name = "tabCHBConfigCopy";
             this.tabCHBConfigCopy.SelectedIndex = 0;
-            this.tabCHBConfigCopy.Size = new System.Drawing.Size(522, 445);
+            this.tabCHBConfigCopy.Size = new System.Drawing.Size(522, 498);
             this.tabCHBConfigCopy.TabIndex = 0;
             // 
             // tabPrincipal
@@ -87,7 +90,7 @@
             this.tabPrincipal.Location = new System.Drawing.Point(4, 22);
             this.tabPrincipal.Name = "tabPrincipal";
             this.tabPrincipal.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrincipal.Size = new System.Drawing.Size(514, 419);
+            this.tabPrincipal.Size = new System.Drawing.Size(514, 448);
             this.tabPrincipal.TabIndex = 0;
             this.tabPrincipal.Text = "Principal";
             this.tabPrincipal.UseVisualStyleBackColor = true;
@@ -146,7 +149,10 @@
             // 
             // tabConfiguracoes
             // 
+            this.tabConfiguracoes.Controls.Add(this.label9);
+            this.tabConfiguracoes.Controls.Add(this.btnCriarPerfil);
             this.tabConfiguracoes.Controls.Add(this.chkDesabilitarCache);
+            this.tabConfiguracoes.Controls.Add(this.comboBox1);
             this.tabConfiguracoes.Controls.Add(this.chkSessionState);
             this.tabConfiguracoes.Controls.Add(this.txtSessionState);
             this.tabConfiguracoes.Controls.Add(this.label8);
@@ -169,15 +175,25 @@
             this.tabConfiguracoes.Location = new System.Drawing.Point(4, 22);
             this.tabConfiguracoes.Name = "tabConfiguracoes";
             this.tabConfiguracoes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabConfiguracoes.Size = new System.Drawing.Size(514, 419);
+            this.tabConfiguracoes.Size = new System.Drawing.Size(514, 472);
             this.tabConfiguracoes.TabIndex = 1;
             this.tabConfiguracoes.Text = "Configurações";
             this.tabConfiguracoes.UseVisualStyleBackColor = true;
             // 
+            // chkDesabilitarCache
+            // 
+            this.chkDesabilitarCache.AutoSize = true;
+            this.chkDesabilitarCache.Location = new System.Drawing.Point(9, 440);
+            this.chkDesabilitarCache.Name = "chkDesabilitarCache";
+            this.chkDesabilitarCache.Size = new System.Drawing.Size(216, 17);
+            this.chkDesabilitarCache.TabIndex = 19;
+            this.chkDesabilitarCache.Text = "Desabilitar cache da aplicação na cópia";
+            this.chkDesabilitarCache.UseVisualStyleBackColor = true;
+            // 
             // chkSessionState
             // 
             this.chkSessionState.AutoSize = true;
-            this.chkSessionState.Location = new System.Drawing.Point(9, 354);
+            this.chkSessionState.Location = new System.Drawing.Point(9, 417);
             this.chkSessionState.Name = "chkSessionState";
             this.chkSessionState.Size = new System.Drawing.Size(265, 17);
             this.chkSessionState.TabIndex = 18;
@@ -188,7 +204,7 @@
             // 
             this.txtSessionState.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSessionState.Location = new System.Drawing.Point(9, 245);
+            this.txtSessionState.Location = new System.Drawing.Point(9, 308);
             this.txtSessionState.Name = "txtSessionState";
             this.txtSessionState.Size = new System.Drawing.Size(461, 20);
             this.txtSessionState.TabIndex = 17;
@@ -196,7 +212,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 229);
+            this.label8.Location = new System.Drawing.Point(6, 292);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(171, 13);
             this.label8.TabIndex = 16;
@@ -205,7 +221,7 @@
             // chkFechar
             // 
             this.chkFechar.AutoSize = true;
-            this.chkFechar.Location = new System.Drawing.Point(9, 331);
+            this.chkFechar.Location = new System.Drawing.Point(9, 394);
             this.chkFechar.Name = "chkFechar";
             this.chkFechar.Size = new System.Drawing.Size(205, 17);
             this.chkFechar.TabIndex = 15;
@@ -215,7 +231,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(164, 299);
+            this.label7.Location = new System.Drawing.Point(164, 362);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(271, 13);
             this.label7.TabIndex = 14;
@@ -224,7 +240,7 @@
             // chkClientExe
             // 
             this.chkClientExe.AutoSize = true;
-            this.chkClientExe.Location = new System.Drawing.Point(9, 308);
+            this.chkClientExe.Location = new System.Drawing.Point(9, 371);
             this.chkClientExe.Name = "chkClientExe";
             this.chkClientExe.Size = new System.Drawing.Size(136, 17);
             this.chkClientExe.TabIndex = 13;
@@ -234,7 +250,7 @@
             // chkWeb
             // 
             this.chkWeb.AutoSize = true;
-            this.chkWeb.Location = new System.Drawing.Point(9, 285);
+            this.chkWeb.Location = new System.Drawing.Point(9, 348);
             this.chkWeb.Name = "chkWeb";
             this.chkWeb.Size = new System.Drawing.Size(111, 17);
             this.chkWeb.TabIndex = 12;
@@ -245,7 +261,7 @@
             // 
             this.txtSQL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSQL.Location = new System.Drawing.Point(9, 194);
+            this.txtSQL.Location = new System.Drawing.Point(9, 257);
             this.txtSQL.Name = "txtSQL";
             this.txtSQL.Size = new System.Drawing.Size(461, 20);
             this.txtSQL.TabIndex = 11;
@@ -253,7 +269,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 178);
+            this.label4.Location = new System.Drawing.Point(6, 241);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(115, 13);
             this.label4.TabIndex = 10;
@@ -263,7 +279,7 @@
             // 
             this.txtPost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtPost.Location = new System.Drawing.Point(9, 138);
+            this.txtPost.Location = new System.Drawing.Point(9, 201);
             this.txtPost.Name = "txtPost";
             this.txtPost.Size = new System.Drawing.Size(461, 20);
             this.txtPost.TabIndex = 9;
@@ -271,7 +287,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 122);
+            this.label3.Location = new System.Drawing.Point(6, 185);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(117, 13);
             this.label3.TabIndex = 8;
@@ -281,7 +297,7 @@
             // 
             this.txtOracle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOracle.Location = new System.Drawing.Point(9, 84);
+            this.txtOracle.Location = new System.Drawing.Point(9, 147);
             this.txtOracle.Name = "txtOracle";
             this.txtOracle.Size = new System.Drawing.Size(461, 20);
             this.txtOracle.TabIndex = 7;
@@ -289,7 +305,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 68);
+            this.label2.Location = new System.Drawing.Point(6, 131);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 13);
             this.label2.TabIndex = 6;
@@ -300,7 +316,7 @@
             this.btnSQL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSQL.BackgroundImage = global::CHB_ConfigCopy.Properties.Resources.zoom;
             this.btnSQL.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnSQL.Location = new System.Drawing.Point(476, 188);
+            this.btnSQL.Location = new System.Drawing.Point(476, 251);
             this.btnSQL.Name = "btnSQL";
             this.btnSQL.Size = new System.Drawing.Size(32, 30);
             this.btnSQL.TabIndex = 5;
@@ -313,7 +329,7 @@
             this.btnPost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPost.BackgroundImage = global::CHB_ConfigCopy.Properties.Resources.zoom;
             this.btnPost.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnPost.Location = new System.Drawing.Point(476, 132);
+            this.btnPost.Location = new System.Drawing.Point(476, 195);
             this.btnPost.Name = "btnPost";
             this.btnPost.Size = new System.Drawing.Size(32, 30);
             this.btnPost.TabIndex = 4;
@@ -326,7 +342,7 @@
             this.btnOracle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOracle.BackgroundImage = global::CHB_ConfigCopy.Properties.Resources.zoom;
             this.btnOracle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOracle.Location = new System.Drawing.Point(476, 78);
+            this.btnOracle.Location = new System.Drawing.Point(476, 141);
             this.btnOracle.Name = "btnOracle";
             this.btnOracle.Size = new System.Drawing.Size(32, 30);
             this.btnOracle.TabIndex = 3;
@@ -339,7 +355,7 @@
             this.btnCaminhoRaiz.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCaminhoRaiz.BackgroundImage = global::CHB_ConfigCopy.Properties.Resources.zoom;
             this.btnCaminhoRaiz.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnCaminhoRaiz.Location = new System.Drawing.Point(476, 22);
+            this.btnCaminhoRaiz.Location = new System.Drawing.Point(476, 85);
             this.btnCaminhoRaiz.Name = "btnCaminhoRaiz";
             this.btnCaminhoRaiz.Size = new System.Drawing.Size(32, 30);
             this.btnCaminhoRaiz.TabIndex = 2;
@@ -351,7 +367,7 @@
             // 
             this.txtCaminhoRaiz.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCaminhoRaiz.Location = new System.Drawing.Point(9, 28);
+            this.txtCaminhoRaiz.Location = new System.Drawing.Point(9, 91);
             this.txtCaminhoRaiz.Name = "txtCaminhoRaiz";
             this.txtCaminhoRaiz.Size = new System.Drawing.Size(461, 20);
             this.txtCaminhoRaiz.TabIndex = 1;
@@ -359,27 +375,48 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 12);
+            this.label1.Location = new System.Drawing.Point(6, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(133, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Caminho raiz dos arquivos:";
             // 
-            // chkDesabilitarCache
+            // btnCriarPerfil
             // 
-            this.chkDesabilitarCache.AutoSize = true;
-            this.chkDesabilitarCache.Location = new System.Drawing.Point(9, 377);
-            this.chkDesabilitarCache.Name = "chkDesabilitarCache";
-            this.chkDesabilitarCache.Size = new System.Drawing.Size(216, 17);
-            this.chkDesabilitarCache.TabIndex = 19;
-            this.chkDesabilitarCache.Text = "Desabilitar cache da aplicação na cópia";
-            this.chkDesabilitarCache.UseVisualStyleBackColor = true;
+            this.btnCriarPerfil.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCriarPerfil.BackgroundImage = global::CHB_ConfigCopy.Properties.Resources.ActionInsert;
+            this.btnCriarPerfil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnCriarPerfil.Location = new System.Drawing.Point(476, 35);
+            this.btnCriarPerfil.Name = "btnCriarPerfil";
+            this.btnCriarPerfil.Size = new System.Drawing.Size(32, 30);
+            this.btnCriarPerfil.TabIndex = 20;
+            this.Tooltip.SetToolTip(this.btnCriarPerfil, "Cria um novo perfil de configurações");
+            this.btnCriarPerfil.UseVisualStyleBackColor = true;
+            this.btnCriarPerfil.Click += new System.EventHandler(this.btnCriarPerfil_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 25);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(118, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Perfil de configurações:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(9, 41);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(461, 21);
+            this.comboBox1.TabIndex = 2;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(546, 470);
+            this.ClientSize = new System.Drawing.Size(546, 523);
             this.Controls.Add(this.tabCHBConfigCopy);
             this.MinimumSize = new System.Drawing.Size(562, 483);
             this.Name = "frmMain";
@@ -426,6 +463,9 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox chkSessionState;
         private System.Windows.Forms.CheckBox chkDesabilitarCache;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button btnCriarPerfil;
     }
 }
 

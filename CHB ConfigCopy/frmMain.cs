@@ -404,5 +404,22 @@ namespace CHB_ConfigCopy
 
             xmlDoc.Save(CaminhoConfig);          
         }
+
+        private void btnCriarPerfil_Click(object sender, EventArgs e)
+        {
+            string nomePerfil = Microsoft.VisualBasic.Interaction.InputBox("Digite o nome do novo perfil", "Novo perfil");
+            bool validacaoOK = true;
+
+            if (nomePerfil.Trim() == "")
+            {
+                MessageBox.Show("Informe um nome de perfil válido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                validacaoOK = false;
+            }
+
+            if (validacaoOK)
+            {
+                //Incluir opções para novas configurações de perfil
+            }
+        }
     }
 }
