@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-//using System.Linq;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -30,7 +30,8 @@ namespace CHB_ConfigCopy
             }
             else
             {
-                //ConfigDefault();
+                Defaults.CriarArquivo();
+                CarregarConfiguracoes(Defaults.PerfilPadrao());
             }
         }
 
@@ -68,7 +69,7 @@ namespace CHB_ConfigCopy
 
             if (Executar)
             {
-                if (chkWeb.Checked)
+                if (chkCopiarWebConfig.Checked)
                 {
                     if (File.Exists(WebConfig))
                     {
@@ -77,7 +78,7 @@ namespace CHB_ConfigCopy
                         XmlDocument xmlDoc = new XmlDocument();
                         xmlDoc.Load(WebConfigDestino);
 
-                        if (chkSessionState.Checked)
+                        if (chkModificarSessionState.Checked)
                         {
                             xmlDoc.GetElementsByTagName("sessionState")[0].Attributes["stateConnectionString"].Value = txtSessionState.Text;
                         }
@@ -92,7 +93,7 @@ namespace CHB_ConfigCopy
                     }
                 }
 
-                if (chkClientExe.Checked)
+                if (chkCopiarClientExeConfig.Checked)
                 {
                     if (File.Exists(ClientExeConfig))
                     {
@@ -110,7 +111,7 @@ namespace CHB_ConfigCopy
                     MessageBox.Show(msgErro, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                if (chkFechar.Checked)
+                if (chkFecharCHBConfigCopy.Checked)
                 {
                     this.Close();
                 }
@@ -189,122 +190,6 @@ namespace CHB_ConfigCopy
             BuscarEnvironments();
         }
 
-        private void ConfigDefault()
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-
-            if (File.Exists(Defaults.CaminhoConfig()))
-            {
-                xmlDoc.Load(Defaults.CaminhoConfig());
-
-                try
-                {
-                    txtCaminhoRaiz.Text = xmlDoc.DocumentElement.GetElementsByTagName("CaminhoRaiz").Item(0).InnerText;
-                }
-                catch (Exception)
-                {
-                    txtCaminhoRaiz.Text = CAMINHO_RAIZ;
-                }
-
-                try
-                {
-                    txtOracle.Text = xmlDoc.DocumentElement.GetElementsByTagName("Oracle").Item(0).InnerText;
-                }
-                catch (Exception)
-                {
-                    txtOracle.Text = CAMINHO_ORACLE;
-                }
-
-                try
-                {
-                    txtPost.Text = xmlDoc.DocumentElement.GetElementsByTagName("Post").Item(0).InnerText;
-                }
-                catch (Exception)
-                {
-                    txtPost.Text = CAMINHO_POST;
-                }
-
-                try
-                {
-                    txtSQL.Text = xmlDoc.DocumentElement.GetElementsByTagName("SQL").Item(0).InnerText;
-                }
-                catch (Exception)
-                {
-                    txtSQL.Text = CAMINHO_SQL;
-                }
-
-                try
-                {
-                    txtSessionState.Text = xmlDoc.DocumentElement.GetElementsByTagName("SessionState").Item(0).InnerText;
-                }
-                catch (Exception)
-                {
-                    txtSessionState.Text = SESSION_STATE;
-                }
-
-                try
-                {
-                    chkWeb.Checked = bool.Parse(xmlDoc.DocumentElement.GetElementsByTagName("CopiarWebConfig").Item(0).InnerText);
-                }
-                catch (Exception)
-                {
-                    chkWeb.Checked = true;
-                }
-
-                try
-                {
-                    chkClientExe.Checked = bool.Parse(xmlDoc.DocumentElement.GetElementsByTagName("CopiarClientExeConfig").Item(0).InnerText);
-                }
-                catch (Exception)
-                {
-                    chkClientExe.Checked = true;
-                }
-
-                try
-                {
-                    chkFechar.Checked = bool.Parse(xmlDoc.DocumentElement.GetElementsByTagName("FecharCHBConfigCopy").Item(0).InnerText);
-                }
-                catch (Exception)
-                {
-                    chkFechar.Checked = true;
-                }
-
-                try
-                {
-                    chkSessionState.Checked = bool.Parse(xmlDoc.DocumentElement.GetElementsByTagName("ModificarSessionState").Item(0).InnerText);
-                }
-                catch (Exception)
-                {
-                    chkSessionState.Checked = true;
-                }
-
-                try
-                {
-                    chkDesabilitarCache.Checked = bool.Parse(xmlDoc.DocumentElement.GetElementsByTagName("DesabilitarCache").Item(0).InnerText);
-                }
-                catch (Exception)
-                {
-                    chkDesabilitarCache.Checked = false;
-                }
-            }
-            else
-            {
-                SalvarConfig(ref xmlDoc, CAMINHO_RAIZ, CAMINHO_ORACLE, CAMINHO_POST, CAMINHO_SQL, SESSION_STATE, true, true, false, false, false);
-
-                txtCaminhoRaiz.Text = CAMINHO_RAIZ;
-                txtOracle.Text = CAMINHO_ORACLE;
-                txtPost.Text = CAMINHO_POST;
-                txtSQL.Text = CAMINHO_SQL;
-                txtSessionState.Text = SESSION_STATE;
-                chkClientExe.Checked = chkWeb.Checked = true;
-                chkFechar.Checked = false;
-                chkSessionState.Checked = false;
-                chkDesabilitarCache.Checked = false;
-            }
-
-            BuscarEnvironments();
-        }
-
         private void BuscarEnvironments()
         {
             cmbEnvironment.Items.Clear();
@@ -327,71 +212,57 @@ namespace CHB_ConfigCopy
             }
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            SalvarConfig(ref xmlDoc, txtCaminhoRaiz.Text, txtOracle.Text, txtPost.Text, txtSQL.Text, txtSessionState.Text, chkWeb.Checked, chkClientExe.Checked, chkFechar.Checked, chkSessionState.Checked, chkDesabilitarCache.Checked);
-        }
-
-        private void SalvarConfig(ref XmlDocument xmlDoc, string CaminhoRaiz, string Oracle, string Post, string SQL, string SessionState, bool CopiarWebConfig, bool CopiarClientExeConfig, bool FecharCHBConfigCopy, bool ModificarSessionState, bool DesabilitarCache)
-        {
-            XmlElement xmlRoot = xmlDoc.CreateElement("Settings");
-            xmlDoc.AppendChild(xmlRoot);
-
-            XmlElement xmlCaminhoRaiz = xmlDoc.CreateElement("CaminhoRaiz");
-            xmlCaminhoRaiz.InnerText = CaminhoRaiz;
-            xmlDoc.DocumentElement.AppendChild(xmlCaminhoRaiz);
-
-            XmlElement xmlOracle = xmlDoc.CreateElement("Oracle");
-            xmlOracle.InnerText = Oracle;
-            xmlDoc.DocumentElement.AppendChild(xmlOracle);
-
-            XmlElement xmlPost = xmlDoc.CreateElement("Post");
-            xmlPost.InnerText = Post;
-            xmlDoc.DocumentElement.AppendChild(xmlPost);
-
-            XmlElement xmlSQL = xmlDoc.CreateElement("SQL");
-            xmlSQL.InnerText = SQL;
-            xmlDoc.DocumentElement.AppendChild(xmlSQL);
-
-            XmlElement xmlSessionState = xmlDoc.CreateElement("SessionState");
-            xmlSessionState.InnerText = SessionState;
-            xmlDoc.DocumentElement.AppendChild(xmlSessionState);
-
-            XmlElement xmlWeb = xmlDoc.CreateElement("CopiarWebConfig");
-            xmlWeb.InnerText = CopiarWebConfig.ToString();
-            xmlDoc.DocumentElement.AppendChild(xmlWeb);
-
-            XmlElement xmlClientExe = xmlDoc.CreateElement("CopiarClientExeConfig");
-            xmlClientExe.InnerText = CopiarClientExeConfig.ToString();
-            xmlDoc.DocumentElement.AppendChild(xmlClientExe);
-
-            XmlElement xmlFecharCHBConfigCopy = xmlDoc.CreateElement("FecharCHBConfigCopy");
-            xmlFecharCHBConfigCopy.InnerText = FecharCHBConfigCopy.ToString();
-            xmlDoc.DocumentElement.AppendChild(xmlFecharCHBConfigCopy);
-
-            XmlElement xmlModificarSessionState = xmlDoc.CreateElement("ModificarSessionState");
-            xmlModificarSessionState.InnerText = ModificarSessionState.ToString();
-            xmlDoc.DocumentElement.AppendChild(xmlModificarSessionState);
-
-            XmlElement xmlDesabilitarCache = xmlDoc.CreateElement("DesabilitarCache");
-            xmlDesabilitarCache.InnerText = DesabilitarCache.ToString();
-            xmlDoc.DocumentElement.AppendChild(xmlDesabilitarCache);
-
-            xmlDoc.Save(Defaults.CaminhoConfig());          
-        }
-
         private void btnCriarPerfil_Click(object sender, EventArgs e)
         {
-            string nomePerfil = "";
             frmInputBox f = new frmInputBox();
             f.ShowDialog();
 
             ProcessadorXml processador = new ProcessadorXml();
             if (processador.AdicionarPerfil(frmInputBox.NomePerfil))
             {
-                //Recarregar configurações
+                CarregarConfiguracoes(frmInputBox.NomePerfil);
             }
+        }
+
+        private void CarregarConfiguracoes(string nomePerfil)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(Defaults.CaminhoConfig());
+            xmlDoc.PreserveWhitespace = true;
+
+            List<TextBox> camposTexto = new List<TextBox>() { txtCaminhoRaiz, txtOracle, txtPost, txtSQL, txtSessionState };
+            List<CheckBox> camposCheckBox = new List<CheckBox>() { chkCopiarWebConfig, chkCopiarClientExeConfig, chkFecharCHBConfigCopy, chkModificarSessionState };
+
+            XmlNodeList configuracoes = xmlDoc.SelectSingleNode("/Settings/Profiles/Profile[@name=\"" + nomePerfil.Trim() + "\"]").ChildNodes;
+
+            foreach (XmlNode configuracao in configuracoes)
+            {
+                var res = camposTexto.Where(c => c.Name.EndsWith(configuracao.Name));
+
+                if (res.Count() > 0)
+                {
+                    ((TextBox)res.First<TextBox>()).Text = configuracao.InnerText;
+                }
+                else
+                {
+                    var res2 = camposCheckBox.Where(c => c.Name.EndsWith(configuracao.Name));
+
+                    if (res2.Count() > 0)
+                    {
+                        ((CheckBox)res2.First<CheckBox>()).Checked = bool.Parse(configuracao.InnerText);
+                    }
+                }
+            }
+
+            cmbPerfil.Items.Clear();
+            XmlNodeList perfis = xmlDoc.SelectSingleNode("/Settings/Profiles").ChildNodes;
+            foreach (XmlNode perfil in perfis)
+            {
+                string nome = perfil.Attributes["name"].Value.ToString().Trim();
+                cmbPerfil.Items.Add(nome);
+            }
+
+            cmbPerfil.Text = nomePerfil;
         }
     }
 }

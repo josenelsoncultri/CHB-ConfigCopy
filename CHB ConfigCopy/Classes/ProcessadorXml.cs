@@ -19,6 +19,7 @@ namespace CHB_ConfigCopy.Classes
                 xmlDocument.Load(Defaults.CaminhoConfig());
                 xmlDocument.PreserveWhitespace = true;
 
+                XmlNodeList configuracoes = xmlDocument.SelectSingleNode("/Settings").ChildNodes;
                 xmlDocument.DocumentElement.RemoveAll();
 
                 XmlAttribute defaultProfileName = xmlDocument.CreateAttribute("name");
@@ -31,7 +32,7 @@ namespace CHB_ConfigCopy.Classes
                 XmlElement profiles = xmlDocument.CreateElement("Profiles");
                 XmlElement profile = xmlDocument.CreateElement("Profile");
                 profile.Attributes.Append(defaultProfileName);
-                foreach (XmlNode n in xmlDocument.DocumentElement.ChildNodes)
+                foreach (XmlNode n in configuracoes)
                 {
                     profile.AppendChild(n);
                 }
@@ -53,7 +54,7 @@ namespace CHB_ConfigCopy.Classes
                 if (Validar(nomePerfil))
                 {
                     XmlDocument xmlDoc = new XmlDocument();
-                    xmlDoc.LoadXml(Defaults.CaminhoConfig());
+                    xmlDoc.Load(Defaults.CaminhoConfig());
                     xmlDoc.PreserveWhitespace = true;
 
                     XmlAttribute name = xmlDoc.CreateAttribute("name");
@@ -106,11 +107,25 @@ namespace CHB_ConfigCopy.Classes
             List<string> retorno = new List<string>();
 
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(Defaults.CaminhoConfig());
+            xmlDoc.Load(Defaults.CaminhoConfig());
 
             foreach (XmlNode n in xmlDoc.SelectNodes("/Settings/Profiles/Profile"))
             {
                 retorno.Add(n.Attributes["name"].Value.ToString().Trim());
+            }
+
+            return retorno;
+        }
+
+        public bool JaFoiPreparado()
+        {
+            bool retorno = false;
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(Defaults.CaminhoConfig());
+            if (xmlDoc.SelectSingleNode("/Settings/DefaultProfile") != null)
+            {
+                retorno = true;
             }
 
             return retorno;

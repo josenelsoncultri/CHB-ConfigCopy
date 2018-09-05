@@ -37,17 +37,14 @@
             this.cmbEnvironment = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tabConfiguracoes = new System.Windows.Forms.TabPage();
-            this.label9 = new System.Windows.Forms.Label();
-            this.btnCriarPerfil = new System.Windows.Forms.Button();
             this.chkDesabilitarCache = new System.Windows.Forms.CheckBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.chkSessionState = new System.Windows.Forms.CheckBox();
+            this.chkModificarSessionState = new System.Windows.Forms.CheckBox();
             this.txtSessionState = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.chkFechar = new System.Windows.Forms.CheckBox();
+            this.chkFecharCHBConfigCopy = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.chkClientExe = new System.Windows.Forms.CheckBox();
-            this.chkWeb = new System.Windows.Forms.CheckBox();
+            this.chkCopiarClientExeConfig = new System.Windows.Forms.CheckBox();
+            this.chkCopiarWebConfig = new System.Windows.Forms.CheckBox();
             this.txtSQL = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtPost = new System.Windows.Forms.TextBox();
@@ -60,6 +57,9 @@
             this.btnCaminhoRaiz = new System.Windows.Forms.Button();
             this.txtCaminhoRaiz = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.btnCriarPerfil = new System.Windows.Forms.Button();
+            this.cmbPerfil = new System.Windows.Forms.ComboBox();
             this.Tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.FolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.tabCHBConfigCopy.SuspendLayout();
@@ -90,7 +90,7 @@
             this.tabPrincipal.Location = new System.Drawing.Point(4, 22);
             this.tabPrincipal.Name = "tabPrincipal";
             this.tabPrincipal.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrincipal.Size = new System.Drawing.Size(514, 472);
+            this.tabPrincipal.Size = new System.Drawing.Size(514, 435);
             this.tabPrincipal.TabIndex = 0;
             this.tabPrincipal.Text = "Principal";
             this.tabPrincipal.UseVisualStyleBackColor = true;
@@ -150,13 +150,13 @@
             // tabConfiguracoes
             // 
             this.tabConfiguracoes.Controls.Add(this.chkDesabilitarCache);
-            this.tabConfiguracoes.Controls.Add(this.chkSessionState);
+            this.tabConfiguracoes.Controls.Add(this.chkModificarSessionState);
             this.tabConfiguracoes.Controls.Add(this.txtSessionState);
             this.tabConfiguracoes.Controls.Add(this.label8);
-            this.tabConfiguracoes.Controls.Add(this.chkFechar);
+            this.tabConfiguracoes.Controls.Add(this.chkFecharCHBConfigCopy);
             this.tabConfiguracoes.Controls.Add(this.label7);
-            this.tabConfiguracoes.Controls.Add(this.chkClientExe);
-            this.tabConfiguracoes.Controls.Add(this.chkWeb);
+            this.tabConfiguracoes.Controls.Add(this.chkCopiarClientExeConfig);
+            this.tabConfiguracoes.Controls.Add(this.chkCopiarWebConfig);
             this.tabConfiguracoes.Controls.Add(this.txtSQL);
             this.tabConfiguracoes.Controls.Add(this.label4);
             this.tabConfiguracoes.Controls.Add(this.txtPost);
@@ -177,28 +177,6 @@
             this.tabConfiguracoes.Text = "Configurações";
             this.tabConfiguracoes.UseVisualStyleBackColor = true;
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 6);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(118, 13);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Perfil de configurações:";
-            // 
-            // btnCriarPerfil
-            // 
-            this.btnCriarPerfil.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCriarPerfil.BackgroundImage = global::CHB_ConfigCopy.Properties.Resources.ActionInsert;
-            this.btnCriarPerfil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnCriarPerfil.Location = new System.Drawing.Point(492, 16);
-            this.btnCriarPerfil.Name = "btnCriarPerfil";
-            this.btnCriarPerfil.Size = new System.Drawing.Size(32, 30);
-            this.btnCriarPerfil.TabIndex = 20;
-            this.Tooltip.SetToolTip(this.btnCriarPerfil, "Cria um novo perfil de configurações");
-            this.btnCriarPerfil.UseVisualStyleBackColor = true;
-            this.btnCriarPerfil.Click += new System.EventHandler(this.btnCriarPerfil_Click);
-            // 
             // chkDesabilitarCache
             // 
             this.chkDesabilitarCache.AutoSize = true;
@@ -209,24 +187,15 @@
             this.chkDesabilitarCache.Text = "Desabilitar cache da aplicação na cópia";
             this.chkDesabilitarCache.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // chkModificarSessionState
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(16, 22);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(470, 21);
-            this.comboBox1.TabIndex = 2;
-            // 
-            // chkSessionState
-            // 
-            this.chkSessionState.AutoSize = true;
-            this.chkSessionState.Location = new System.Drawing.Point(9, 354);
-            this.chkSessionState.Name = "chkSessionState";
-            this.chkSessionState.Size = new System.Drawing.Size(265, 17);
-            this.chkSessionState.TabIndex = 18;
-            this.chkSessionState.Text = "Substituir valor do atributo \"stateConnectionString\"";
-            this.chkSessionState.UseVisualStyleBackColor = true;
+            this.chkModificarSessionState.AutoSize = true;
+            this.chkModificarSessionState.Location = new System.Drawing.Point(9, 354);
+            this.chkModificarSessionState.Name = "chkModificarSessionState";
+            this.chkModificarSessionState.Size = new System.Drawing.Size(265, 17);
+            this.chkModificarSessionState.TabIndex = 18;
+            this.chkModificarSessionState.Text = "Modificar valor do atributo \"stateConnectionString\"";
+            this.chkModificarSessionState.UseVisualStyleBackColor = true;
             // 
             // txtSessionState
             // 
@@ -246,15 +215,15 @@
             this.label8.TabIndex = 16;
             this.label8.Text = "String de conexão do sessionState";
             // 
-            // chkFechar
+            // chkFecharCHBConfigCopy
             // 
-            this.chkFechar.AutoSize = true;
-            this.chkFechar.Location = new System.Drawing.Point(9, 331);
-            this.chkFechar.Name = "chkFechar";
-            this.chkFechar.Size = new System.Drawing.Size(205, 17);
-            this.chkFechar.TabIndex = 15;
-            this.chkFechar.Text = "Fechar CHB ConfigCopy após a cópia";
-            this.chkFechar.UseVisualStyleBackColor = true;
+            this.chkFecharCHBConfigCopy.AutoSize = true;
+            this.chkFecharCHBConfigCopy.Location = new System.Drawing.Point(9, 331);
+            this.chkFecharCHBConfigCopy.Name = "chkFecharCHBConfigCopy";
+            this.chkFecharCHBConfigCopy.Size = new System.Drawing.Size(205, 17);
+            this.chkFecharCHBConfigCopy.TabIndex = 15;
+            this.chkFecharCHBConfigCopy.Text = "Fechar CHB ConfigCopy após a cópia";
+            this.chkFecharCHBConfigCopy.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -265,25 +234,25 @@
             this.label7.TabIndex = 14;
             this.label7.Text = "Orientação: deixar as duas opções SEMPRE marcadas!";
             // 
-            // chkClientExe
+            // chkCopiarClientExeConfig
             // 
-            this.chkClientExe.AutoSize = true;
-            this.chkClientExe.Location = new System.Drawing.Point(9, 308);
-            this.chkClientExe.Name = "chkClientExe";
-            this.chkClientExe.Size = new System.Drawing.Size(136, 17);
-            this.chkClientExe.TabIndex = 13;
-            this.chkClientExe.Text = "Copiar client.exe.config";
-            this.chkClientExe.UseVisualStyleBackColor = true;
+            this.chkCopiarClientExeConfig.AutoSize = true;
+            this.chkCopiarClientExeConfig.Location = new System.Drawing.Point(9, 308);
+            this.chkCopiarClientExeConfig.Name = "chkCopiarClientExeConfig";
+            this.chkCopiarClientExeConfig.Size = new System.Drawing.Size(136, 17);
+            this.chkCopiarClientExeConfig.TabIndex = 13;
+            this.chkCopiarClientExeConfig.Text = "Copiar client.exe.config";
+            this.chkCopiarClientExeConfig.UseVisualStyleBackColor = true;
             // 
-            // chkWeb
+            // chkCopiarWebConfig
             // 
-            this.chkWeb.AutoSize = true;
-            this.chkWeb.Location = new System.Drawing.Point(9, 285);
-            this.chkWeb.Name = "chkWeb";
-            this.chkWeb.Size = new System.Drawing.Size(111, 17);
-            this.chkWeb.TabIndex = 12;
-            this.chkWeb.Text = "Copiar web.config";
-            this.chkWeb.UseVisualStyleBackColor = true;
+            this.chkCopiarWebConfig.AutoSize = true;
+            this.chkCopiarWebConfig.Location = new System.Drawing.Point(9, 285);
+            this.chkCopiarWebConfig.Name = "chkCopiarWebConfig";
+            this.chkCopiarWebConfig.Size = new System.Drawing.Size(111, 17);
+            this.chkCopiarWebConfig.TabIndex = 12;
+            this.chkCopiarWebConfig.Text = "Copiar web.config";
+            this.chkCopiarWebConfig.UseVisualStyleBackColor = true;
             // 
             // txtSQL
             // 
@@ -409,6 +378,37 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Caminho raiz dos arquivos:";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(13, 6);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(118, 13);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Perfil de configurações:";
+            // 
+            // btnCriarPerfil
+            // 
+            this.btnCriarPerfil.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCriarPerfil.BackgroundImage = global::CHB_ConfigCopy.Properties.Resources.ActionInsert;
+            this.btnCriarPerfil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnCriarPerfil.Location = new System.Drawing.Point(492, 16);
+            this.btnCriarPerfil.Name = "btnCriarPerfil";
+            this.btnCriarPerfil.Size = new System.Drawing.Size(32, 30);
+            this.btnCriarPerfil.TabIndex = 20;
+            this.Tooltip.SetToolTip(this.btnCriarPerfil, "Cria um novo perfil de configurações");
+            this.btnCriarPerfil.UseVisualStyleBackColor = true;
+            this.btnCriarPerfil.Click += new System.EventHandler(this.btnCriarPerfil_Click);
+            // 
+            // cmbPerfil
+            // 
+            this.cmbPerfil.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPerfil.FormattingEnabled = true;
+            this.cmbPerfil.Location = new System.Drawing.Point(16, 22);
+            this.cmbPerfil.Name = "cmbPerfil";
+            this.cmbPerfil.Size = new System.Drawing.Size(470, 21);
+            this.cmbPerfil.TabIndex = 2;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -417,11 +417,10 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.tabCHBConfigCopy);
             this.Controls.Add(this.btnCriarPerfil);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbPerfil);
             this.MinimumSize = new System.Drawing.Size(562, 483);
             this.Name = "frmMain";
             this.Text = "CHB ConfigCopy";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.tabCHBConfigCopy.ResumeLayout(false);
             this.tabPrincipal.ResumeLayout(false);
             this.tabPrincipal.PerformLayout();
@@ -457,15 +456,15 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.FolderBrowserDialog FolderBrowser;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox chkClientExe;
-        private System.Windows.Forms.CheckBox chkWeb;
-        private System.Windows.Forms.CheckBox chkFechar;
+        private System.Windows.Forms.CheckBox chkCopiarClientExeConfig;
+        private System.Windows.Forms.CheckBox chkCopiarWebConfig;
+        private System.Windows.Forms.CheckBox chkFecharCHBConfigCopy;
         private System.Windows.Forms.TextBox txtSessionState;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox chkSessionState;
+        private System.Windows.Forms.CheckBox chkModificarSessionState;
         private System.Windows.Forms.CheckBox chkDesabilitarCache;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbPerfil;
         private System.Windows.Forms.Button btnCriarPerfil;
     }
 }

@@ -16,7 +16,7 @@ namespace CHB_ConfigCopy.Classes
             string xml = "";
 
             xml += "<Settings>";
-            xml += "	<DefaultProfile value=\"GeneXus 15\" />";
+            xml += "	<DefaultProfile name=\"GeneXus 15\" />";
             xml += "	<Profiles>";
             xml += "		<Profile name=\"GeneXus 15\">";
             xml += ConfiguracoesPadrao();
@@ -29,6 +29,8 @@ namespace CHB_ConfigCopy.Classes
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(xml);
                 xmlDoc.PreserveWhitespace = true;
+
+                xmlDoc.InsertBefore(xmlDoc.CreateXmlDeclaration("1.0", "utf-8", "no"), xmlDoc.DocumentElement);
 
                 xmlDoc.Save(Defaults.CaminhoConfig());                
             }            
@@ -55,6 +57,18 @@ namespace CHB_ConfigCopy.Classes
         public static string CaminhoConfig()
         {
             return System.Windows.Forms.Application.StartupPath + @"\Settings.xml";
+        }
+
+        public static string PerfilPadrao()
+        {
+            string retorno = "";
+
+            XmlDocument xml = new XmlDocument();
+            xml.Load(CaminhoConfig());
+
+            retorno = xml.SelectSingleNode("/Settings/DefaultProfile/@name").Value.ToString().Trim();
+
+            return retorno;
         }
     }
 }
